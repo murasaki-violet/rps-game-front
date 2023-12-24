@@ -3,12 +3,10 @@ import { io } from "socket.io-client";
 
 export default function Home() {
   const [socket, setSocket] = useState(null);
-  //const [socketJoin, setSocketJoin] = useState(false);
   const [isName,setIsName] = useState(false)
   const [name,setName] = useState("")
   const [room,setRoom] = useState("")
   const [myUserId,setMyUserId] = useState("")
-  //const [isMatch,setIsMatch] = useState(false)
   const [matchName,setMatchName] = useState("")
   const [hand,setHand] = useState("")
   const [gameSet,setGameSet] = useState("")
@@ -17,10 +15,8 @@ export default function Home() {
   useEffect(() => {
     // 初回のみsocket.ioのインスタンスを作成
     const newSocket = io(process.env.NEXT_PUBLIC_API_URL);
-    setSocket(newSocket);
-    //setSocketJoin(true)
 
-    //socket.on('userid',userid => setMyUserId(userid))
+    setSocket(newSocket);
 
     // クリーンアップ関数でsocketを切断
     return () => newSocket.close();
@@ -31,12 +27,7 @@ export default function Home() {
   useEffect(() => {
     if(name !== "" && room !== "" ){
 
-      //const newSocket = io("http://localhost:5000");
-      //setSocket(newSocket);
-
       socket.on('userid',userid => setMyUserId(userid))
-      
-      console.log(myUserId)
 
       socket.emit('joinRoom', 
         {
@@ -49,10 +40,7 @@ export default function Home() {
 
 
       socket.on("roomer",message => {
-        //console.log(message)
-        //console.log(myUserId)
         const result = message.filter(e => e.name !== name);
-        //console.log(result.length)
         if(result.length > 0){
           setMatchName(result[0].name)
         }
@@ -77,10 +65,8 @@ export default function Home() {
         }else{
           if(winner === myUserId){
             setGameSet("勝ち");
-            console.log("勝ち")
           }else if(winner !== myUserId){
             setGameSet("負け");
-            console.log("負け")
           }
         }
       });
@@ -89,10 +75,6 @@ export default function Home() {
       setIsName(false)
     }
   }, [isName, hand, socket]);
-
-  useEffect(()=>{
-    
-  },[gameSet])
 
   const showHand = (hand) =>{
     if(hand === "rock"){
