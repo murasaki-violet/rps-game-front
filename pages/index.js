@@ -23,12 +23,15 @@ export default function Home() {
   }, []);
 
 
-
+  //[isName, hand, socket]のuseEffect
   useEffect(() => {
+    //部屋・名前の設定があるか
     if(name !== "" && room !== "" ){
 
+      //usaeIDの取得
       socket.on('userid',userid => setMyUserId(userid))
 
+      //ルームに入室
       socket.emit('joinRoom', 
         {
             "name": name, 
@@ -36,9 +39,10 @@ export default function Home() {
         }
       );
 
+      //ルームに入室にエラーがあれば、リロード
       socket.on("roomError",() => window.location.reload());
 
-
+      //現在の部屋の状態
       socket.on("roomer",message => {
         const result = message.filter(e => e.name !== name);
         if(result.length > 0){
@@ -46,6 +50,7 @@ export default function Home() {
         }
       });
 
+      //handが変更になって空白
       if(hand !== ""){
         socket.emit('pon',
         {
@@ -54,6 +59,8 @@ export default function Home() {
         })
       }
 
+      //勝ち負け情報の取得
+      //買った方のuserIDが投げられてくる
       socket.on("winner",winner => {
         
         if(hand === ""){
@@ -71,11 +78,14 @@ export default function Home() {
         }
       });
 
+    //部屋・名前の設定が無い場合の設定
     }else{
       setIsName(false)
     }
+  
   }, [isName, hand, socket]);
 
+  //ジャンケンの手の表示を行う
   const showHand = (hand) =>{
     if(hand === "rock"){
       return "グー"
@@ -85,10 +95,9 @@ export default function Home() {
     else{
       return "パー"
     }
-
   }
 
-  
+
   return (
     <>
       {!isName && (
