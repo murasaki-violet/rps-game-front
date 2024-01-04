@@ -134,10 +134,26 @@ export default function Home() {
       {isName && (
       <>
         {myUserId === "" ?(
-          <>サーバー起動中 無料サーバーだから時間がかかるよ!</>
+          <>
+            <div
+            className=" w-screen p-4 my-2 text-5xl text-center"
+            >
+              ジャンケンゲーム
+            </div>
+            サーバー起動中 無料サーバーだから時間がかかるよ!
+          </>
         ):(
           <>
-            <div>{`現在は[${room}]部屋にいます。`}</div>
+            <div
+            className=" w-screen p-4 my-2 text-5xl text-center"
+            >
+              ジャンケンゲーム
+            </div>
+            <div
+            className=" w-screen p-4 my-2 text-5xl text-center"
+            >
+              {`現在は[${room}]部屋にいます。`}
+            </div>
             <div>{`こんにちは、${name}さん`}</div>
             {matchName === "" ? (
               <div>現在対戦相手はいません</div>
