@@ -28,6 +28,7 @@ export default function Home() {
     //部屋・名前の設定があるか
     if(name !== "" && room !== "" ){
 
+
       //usaeIDの取得
       socket.on('userid',userid => setMyUserId(userid))
 
@@ -102,64 +103,76 @@ export default function Home() {
     <>
       {!isName && (
       <>
+        <div
+          className=" w-screen p-4 my-2 text-5xl text-center"
+        >
+          ジャンケンゲーム
+        </div>
         <input 
+          className=" w-screen p-4 my-2 text-xl text-center border-2 border-black "
           type="text" 
           value={name} 
           onChange={(e) => setName(e.target.value)} 
-          placeholder="あなたの名前"
+          placeholder="あなたの名前を入力してね！"
         />
   
         <input 
+          className=" w-screen p-4 my-2 text-xl text-center border-2 border-black "
           type="text" 
           value={room} 
           onChange={(e) => setRoom(e.target.value)} 
-          placeholder="部屋の名前"
+          placeholder="相手と決めた部屋の名前を入力してね！"
         />
-
-        <button className=" border-2" onClick={() => setIsName(true)}>決定</button>
+        <button 
+          className=" flex m-10 p-4 items-center border-2 text-3xl border-gray-600" 
+          onClick={() => setIsName(true)}
+        >入室</button>
       </>
       )}
 
       {isName && (
       <>
-      <div>{`現在は[${room}]部屋にいます。`}</div>
-      <div>{`こんにちは、${name}さん`}</div>
-      {matchName === "" ? (
-          <div>現在対戦相手はいません</div>
+        {myUserId === "" ?(
+          <>サーバー起動中</>
         ):(
           <>
-            <div>{`対戦相手は${matchName}さんです。`}</div>
-            {hand === "" ? (
-            <>
-              <div>それでは、ジャンケン</div>
-              <button className=" border-2" onClick={() => setHand("rock")}>グー</button>
-              <button className=" border-2" onClick={() => setHand("scissors")}>チョキ</button>
-              <button className=" border-2" onClick={() => setHand("paper")}>パー</button><br/>
-              でポン!
-            </>
+            <div>{`現在は[${room}]部屋にいます。`}</div>
+            <div>{`こんにちは、${name}さん`}</div>
+            {matchName === "" ? (
+              <div>現在対戦相手はいません</div>
             ):(
               <>
-                <div>あなたは{showHand(hand)}を出しました。</div>
-                {gameSet === "" ?
+                <div>{`対戦相手は${matchName}さんです。`}</div>
+                {hand === "" ? (
+                <>
+                  <div>それでは、ジャンケン</div>
+                  <button className=" border-2" onClick={() => setHand("rock")}>グー</button>
+                  <button className=" border-2" onClick={() => setHand("scissors")}>チョキ</button>
+                  <button className=" border-2" onClick={() => setHand("paper")}>パー</button><br/>
+                  でポン!
+                </>
+                ):(
                   <>
-                    <div>対戦相手を待っています.....</div>
-                    <div>[あいこの場合は、再選択になります]</div>
+                    <div>あなたは{showHand(hand)}を出しました。</div>
+                    {gameSet === "" ?
+                      <>
+                        <div>対戦相手を待っています.....</div>
+                        <div>[あいこの場合は、再選択になります]</div>
+                      </>
+                      :
+                      <>
+                        <div>あなたの{gameSet}です。</div>
+                        再戦はリロード！
+                      </>
+                    }
                   </>
-                  :
-                  <>
-                    <div>あなたの{gameSet}です。</div>
-                    再戦はリロード！
-                  </>
-                }
+                )}
               </>
-            )
-            }
+            )}
           </>
-        )
-      }
+        )}
       </>
       )}
-
     </>
   )
 }
