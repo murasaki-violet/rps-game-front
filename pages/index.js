@@ -84,7 +84,7 @@ export default function Home() {
       setIsName(false)
     }
   
-  }, [isName, hand, socket]);
+  }, [isName, hand, socket, myUserId]);
 
   //ジャンケンの手の表示を行う
   const showHand = (hand) =>{
@@ -101,6 +101,7 @@ export default function Home() {
 
   return (
     <>
+      {console.log(myUserId)}
       {!isName && (
       <>
         <div
@@ -133,7 +134,7 @@ export default function Home() {
       {isName && (
       <>
         {myUserId === "" ?(
-          <>サーバー起動中</>
+          <>サーバー起動中 無料サーバーだから時間がかかるよ!</>
         ):(
           <>
             <div>{`現在は[${room}]部屋にいます。`}</div>
