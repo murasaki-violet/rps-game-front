@@ -105,29 +105,33 @@ export default function Home() {
       {!isName && (
       <>
         <div
-          className=" w-screen p-4 my-2 text-5xl text-center"
+          className="p-4 my-2 text-5xl text-center"
         >
           ジャンケンゲーム
         </div>
-        <input 
-          className=" w-screen p-4 my-2 text-xl text-center border-2 border-black "
-          type="text" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          placeholder="あなたの名前を入力してね！"
-        />
-  
-        <input 
-          className=" w-screen p-4 my-2 text-xl text-center border-2 border-black "
-          type="text" 
-          value={room} 
-          onChange={(e) => setRoom(e.target.value)} 
-          placeholder="相手と決めた部屋の名前を入力してね！"
-        />
-        <button 
-          className=" flex m-10 p-4 items-center border-2 text-3xl border-gray-600" 
-          onClick={() => setIsName(true)}
-        >入室</button>
+        <div className=" w-full flex-col text-center">
+          <input 
+            className="p-4 my-2 w-96 text-xl text-center border-2 border-black "
+            type="text" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
+            placeholder="あなたの名前を入力してね！"
+          />
+          
+          <input 
+            className="p-4 m-4 w-96 text-xl text-center border-2 border-black "
+            type="text" 
+            value={room} 
+            onChange={(e) => setRoom(e.target.value)} 
+            placeholder="合言葉を決めてね(アルファベット)"
+          />
+        </div>
+        <div className=" w-full flex-col text-center">
+          <button 
+            className=" w-40 flex-col text-center m-10 p-4 items-center border-2 text-3xl border-gray-600" 
+            onClick={() => setIsName(true)}
+          >入室</button>
+        </div>
       </>
       )}
 
@@ -152,21 +156,27 @@ export default function Home() {
             <div
             className=" w-screen p-4 my-2 text-5xl text-center"
             >
-              {`現在は[${room}]部屋にいます。`}
+              {`合言葉：[${room}]`}
             </div>
-            <div>{`こんにちは、${name}さん`}</div>
+            <div
+                className=" w-screen p-4 my-2 text-xl text-center"
+            >
+              {`こんにちは、${name}さん`}
+            </div>
             {matchName === "" ? (
-              <div>現在対戦相手はいません</div>
+              <div className=" w-screen p-4 my-2 text-xl text-center">現在対戦相手はいません</div>
             ):(
               <>
-                <div>{`対戦相手は${matchName}さんです。`}</div>
+                <div className=" w-screen p-4 my-2 text-xl text-center">{`対戦相手は${matchName}さんです。`}</div>
                 {hand === "" ? (
                 <>
-                  <div>それでは、ジャンケン</div>
-                  <button className=" border-2" onClick={() => setHand("rock")}>グー</button>
+                  <div className=" w-screen p-4 my-2 text-xl text-center">それでは、ジャンケン</div>
+                  <button className=" p-2 m-1 w-96 text-xl text-center border-black border-2" onClick={() => setHand("rock")}>グー</button>
                   <button className=" border-2" onClick={() => setHand("scissors")}>チョキ</button>
                   <button className=" border-2" onClick={() => setHand("paper")}>パー</button><br/>
-                  でポン!
+                  <div className=" w-screen p-4 my-2 text-xl text-center">
+                    でポン!
+                  </div>
                 </>
                 ):(
                   <>
